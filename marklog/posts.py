@@ -99,7 +99,7 @@ class Post(db.Model):
 		f = open(filepath, 'r')
 		html = md.convert(f.read())
 		f.close()
-
+		# TODO: ensure no string field is over the global char limit
 		title = md.Meta.get('title', [''])[0]
 		date = md.Meta.get('date', [''])[0]
 		previewtext = md.Meta.get('previewtext', [''])[0]		

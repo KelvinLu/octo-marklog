@@ -1,4 +1,4 @@
-from flask import request, Response, json, abort
+from flask import request, Response, json, abort, render_template, url_for
 
 from marklog import app
 from marklog import posts
@@ -7,7 +7,10 @@ import os
 
 @app.route('/')
 def index():
-	return str(posts.Post.query.all())
+	context = {
+		"blog_title": app.config['MARKLOG_BLOG_TITLE']
+	}
+	return render_template('base.html', **context)
 
 @app.route('/update')
 def update():
@@ -25,7 +28,7 @@ def listings():
 				"previewimage": post.previewimage,
 				"postdate": post.postdate,
 				"slug": post.slug,
-				} for post in q]
+	} for post in q]
 
 	return Response(json.dumps(results), mimetype = 'application/json')
 

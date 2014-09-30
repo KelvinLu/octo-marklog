@@ -1,0 +1,28 @@
+body {
+	background-color: #000000;
+	font-family: 'Montserrat', sans-serif;
+	color: black;
+}
+
+/* No selection */
+body {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+}
+
+.middle {
+	background-color: #FFFDFC;
+}
+
+#header {
+	border-bottom: 2px solid black;
+}
+
+.expanddown {
+	height: 100%;
+}

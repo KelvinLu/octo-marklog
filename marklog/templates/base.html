@@ -1,0 +1,31 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ blog_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/foundation.min.css') }}" />
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
+    <script src="{{ url_for('static', filename='js/vendor/modernizr.js') }}"></script>
+  </head>
+  <body>
+
+    <div class="row">
+      <div id="header" class="medium-10 medium-offset-1 column middle">
+        <h1>{{ blog_title }}</h1>
+      </div>
+    </div>
+
+    <div class="row expanddown">
+      <div id="content" class="medium-10 medium-offset-1 column middle expanddown">
+        :) KELVIN IS COOL!
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/foundation.min.js') }}"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
