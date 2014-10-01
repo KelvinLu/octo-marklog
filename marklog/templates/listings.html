@@ -7,8 +7,12 @@
 {% block body %}
   <div class="row">
     <div id="header" class="medium-10 medium-offset-1 column middle">
-      <a href="/"><h1 id="title">{{ blog_title }}</h1></a>
-      <p>{{ blog_desc }}</p>
+      <div id="blogtitle">
+        <a href="/"><h1 id="title">{{ blog_title }}</h1></a>
+      </div>
+      <div id="blogdesc">
+        <p>{{ blog_desc }}</p>
+      </div>
     </div>
   </div>
 
@@ -17,12 +21,13 @@
       {% for post in posts %}
         <div class="listing">
           <a href="/post/{{ post.slug }}">
+            <p class="postdate">{{ post.postdate.strftime('%d %B, %Y') }}</p>
             {% if post.previewimage %}
-              <img src={{ post.previewimage }}>
+              <img src={{ post.previewimage }} alt="{{ post.title }}">
             {% endif %}
             <h1 class="posttitle">{{ post.title }}</h1>
             {% if post.previewimage %}
-              <p>{{ post.previewtext }}</p>
+              <p class="posttext">{{ post.previewtext }}</p>
             {% endif %}
           </a>
         </div>
@@ -43,6 +48,7 @@
 
 {% block js %}
   <script src="{{ url_for('static', filename='js/vendor/masonry.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/vendor/imagesloaded.pkgd.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/vendor/jquery.infinitescroll.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/listings.js') }}"></script>
 {% endblock %}
