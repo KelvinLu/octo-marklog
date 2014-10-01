@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
+{% endblock %}
+
+{% block body %}
+  <div class="row">
+    <div id="header" class="medium-10 medium-offset-1 column middle">
+      <a href="/"><h1 id="title">{{ blog_title }}</h1></a>
+      <p>{{ blog_desc }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="listings" class="medium-10 medium-offset-1 column middle">
+      {% for post in posts %}
+        <div class="listing">
+          <a href="/post/{{ post.slug }}">
+            {% if post.previewimage %}
+              <img src={{ post.previewimage }}>
+            {% endif %}
+            <h1 class="posttitle">{{ post.title }}</h1>
+            {% if post.previewimage %}
+              <p>{{ post.previewtext }}</p>
+            {% endif %}
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="pagination" class="medium-10 medium-offset-1 column middle">
+      {% if prevpage != 0 %}
+      <a href="/listings/{{ prevpage }}">Previous</a> |
+      {% endif %}
+
+      <a href="/listings/{{ nextpage }}">Next</a>
+    </div>    
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script src="{{ url_for('static', filename='js/vendor/masonry.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/vendor/jquery.infinitescroll.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/listings.js') }}"></script>
+{% endblock %}

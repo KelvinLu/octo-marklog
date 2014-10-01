@@ -1,6 +1,6 @@
 body {
-	background-color: #000000;
-	font-family: 'Montserrat', sans-serif;
+	background-color: #F8F5F5;
+	font-family: 'Droid Serif', serif;
 	color: black;
 }
 
@@ -19,10 +19,39 @@ body {
 	background-color: #FFFDFC;
 }
 
-#header {
-	border-bottom: 2px solid black;
+.listing {
+	font-family: 'Droid Serif', serif;
+	width: 32%;
+	padding: 0.5em;
 }
 
-.expanddown {
-	height: 100%;
+.listing .posttitle {
+	font-family: 'Droid Serif', serif;
+	font-weight: bold;
+	font-size: 1.3em;	
+}
+
+@media (max-width: 40em) {
+	.listing {
+		width: 100%;
+	}
+
+	#listings {
+		padding: 0px;
+	}
+}
+
+#header {
+	border-bottom: 1px solid black;
+	text-align: center;
+}
+
+#pagination {
+	border-top: 1px solid black;
+	text-align: center;	
+}
+
+#title {
+	font-family: 'Droid Serif', serif;
+	font-weight: bold;	
 }
