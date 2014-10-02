@@ -28,7 +28,7 @@
           {% endif %}
               <p class="listingdate">{{ post.postdate.strftime('%d %B, %Y') }}</p>
               <h1 class="listingtitle">{{ post.title }}</h1>
-              {% if post.previewimage %}
+              {% if post.previewtext%}
                 <p class="listingtext">{{ post.previewtext }}</p>
               {% endif %}
             </div>
