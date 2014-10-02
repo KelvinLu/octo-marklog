@@ -97,7 +97,7 @@ class Post(db.Model):
 	def new_post(cls, filename, filepath):
 		# Since filenames are already computed, we'll just use those again
 		f = open(filepath, 'r')
-		html = md.convert(f.read())
+		html = md.reset().convert(f.read())
 		f.close()
 		# TODO: ensure no string field is over the global char limit
 		title = md.Meta.get('title', [''])[0]
@@ -124,7 +124,7 @@ class Post(db.Model):
 			return html
 
 		f = open(filepath, 'r')
-		html = md.convert(f.read())
+		html = md.reset().convert(f.read())
 		f.close()
 
 		cache.set(self.slug, html)

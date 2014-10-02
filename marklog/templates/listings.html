@@ -21,16 +21,19 @@
       {% for post in posts %}
         <div class="listing">
           <a href="/post/{{ post.slug }}">
-            <p class="postdate">{{ post.postdate.strftime('%d %B, %Y') }}</p>
-            {% if post.previewimage %}
-              <img src={{ post.previewimage }} alt="{{ post.title }}">
-            {% endif %}
-            <h1 class="posttitle">{{ post.title }}</h1>
-            {% if post.previewimage %}
-              <p class="posttext">{{ post.previewtext }}</p>
-            {% endif %}
+          {% if post.previewimage %}
+            <div class="listingimg" style="background-image: url({{ post.previewimage }}); background-size: cover;">
+          {% else %}
+            <div class="listingimg">
+          {% endif %}
+              <p class="listingdate">{{ post.postdate.strftime('%d %B, %Y') }}</p>
+              <h1 class="listingtitle">{{ post.title }}</h1>
+              {% if post.previewimage %}
+                <p class="listingtext">{{ post.previewtext }}</p>
+              {% endif %}
+            </div>
           </a>
-        </div>
+        </div> 
       {% endfor %}
     </div>
   </div>

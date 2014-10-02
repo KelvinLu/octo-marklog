@@ -1,6 +1,6 @@
 body {
-	background-color: #F8F5F5;
-	font-family: 'Droid Serif', serif;
+	background-color: #091216;
+	font-family: 'Montserrat', sans-serif;
 	color: black;
 }
 
@@ -16,40 +16,16 @@ body {
 }
 
 .middle {
-	background-color: #FFFDFC;
+	background-color: #2D3032;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 .listing {
-	font-family: 'Droid Serif', serif;
-	width: 32%;
-	padding: 0.5em;
-	border-bottom: 1px solid transparent;
-	margin-top: 2em;
-	margin-bottom: 4em;
-}
-
-.listing:hover {
-	border-bottom: 1px solid black;
-}
-
-.listing .posttitle {
-	font-family: 'Droid Serif', serif;
-	font-weight: bold;
-	font-size: 1em;
-	color: #40494C;
-}
-
-.listing .postdate {
-	font-family: 'Droid Serif', serif;
-	font-size: 0.8em;
-	margin-bottom: 0.2em;
-	color: #9B9D9E;
-}
-
-.listing .posttext {
-	font-size: 0.8em;
-	color: #7E8C90;
-	margin-bottom: 0.2em;
+	font-family: 'Montserrat', sans-serif;
+	background-color: #2D3032;
+	width: 33.33%;
+	text-shadow: 2px 2px black;
 }
 
 @media (max-width: 40em) {
@@ -62,18 +38,43 @@ body {
 	}
 }
 
+.listing .listingimg {
+	padding: 2em 0.5em 4em 0.5em;
+}
+
+.listing .listingdate {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 0.8em;
+	display: inline-block;
+	margin-bottom: 0.2em;
+	color: white;
+}
+
+.listing .listingtitle {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: bold;
+	font-size: 1em;
+	color: white;
+}
+
+.listing .listingtext {
+	font-size: 0.8em;
+	color: white;
+	margin-bottom: 0.2em;
+}
+
 #header {
 	text-align: center;
 }
 
 #blogdesc {
-	background-color: black;
 	color: white;
 }
 
 #title {
-	font-family: 'Droid Serif', serif;
+	font-family: 'Montserrat', sans-serif;
 	font-weight: bold;	
+	color: white;
 }
 
 #pagination {

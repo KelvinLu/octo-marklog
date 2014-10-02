@@ -8,7 +8,7 @@ import os
 @app.route('/')
 @app.route('/listings/<int:page>')
 def listings(page = 1):
-	limit = 10
+	limit = 15
 	offset = (page - 1) * limit
 	postquery = posts.Post.query.order_by(posts.Post.postdate.desc()).offset(offset).limit(limit).all()
 
