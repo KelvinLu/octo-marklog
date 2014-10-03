@@ -18,6 +18,7 @@ def listings(page = 1):
 	context = {
 		"blog_title": app.config['MARKLOG_BLOG_TITLE'],
 		"blog_desc": app.config['MARKLOG_BLOG_DESC'],
+		"post_colors": app.config['MARKLOG_BLOG_POST_COLORS'],
 		"posts": postquery,
 		"nextpage": page + 1,
 		"prevpage": page - 1,

@@ -8,10 +8,10 @@
   <div class="row">
     <div id="header" class="medium-10 medium-offset-1 column middle">
       <div id="blogtitle">
-        <a href="/"><h1 id="title">{{ blog_title }}</h1></a>
+        <a href="/"><h1 id="title">{{ blog_title|safe }}</h1></a>
       </div>
       <div id="blogdesc">
-        <p>{{ blog_desc }}</p>
+        <p>{{ blog_desc|safe }}</p>
       </div>
     </div>
   </div>
@@ -19,19 +19,25 @@
   <div class="row">
     <div id="listings" class="medium-10 medium-offset-1 column middle">
       {% for post in posts %}
-        <div class="listing">
+        <div class="listing padded">
           <a href="/post/{{ post.slug }}">
+
+            <div class="bg color padded float expand" style="background-color: {{ post_colors|random }};">
+            </div>
+
           {% if post.previewimage %}
-            <div class="listingimg" style="background-image: url({{ post.previewimage }}); background-size: cover;">
-          {% else %}
-            <div class="listingimg">
+            <div class="bg image padded float expand" style="background-image: url({{ post.previewimage }});">
+            </div>
           {% endif %}
-              <p class="listingdate">{{ post.postdate.strftime('%d %B, %Y') }}</p>
-              <h1 class="listingtitle">{{ post.title }}</h1>
+
+            <div class="words">
+              <p class="date">{{ post.postdate.strftime('%d %B, %Y') }}</p>
+              <p class="title">{{ post.title|safe }}</p>
               {% if post.previewtext%}
-                <p class="listingtext">{{ post.previewtext }}</p>
+                <p class="text">{{ post.previewtext|safe }}</p>
               {% endif %}
             </div>
+
           </a>
         </div> 
       {% endfor %}
