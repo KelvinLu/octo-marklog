@@ -13,7 +13,9 @@ MAX_STR_LIM = 200
 
 
 
-md = markdown.Markdown(extensions = ['markdown.extensions.meta'])
+md = markdown.Markdown(extensions = ['markdown.extensions.meta', 
+	'markdown.extensions.fenced_code',
+	'markdown.extensions.smart_strong',])
 
 
 

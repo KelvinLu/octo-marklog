@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+  <title>{{ post_title }} - {{ blog_title }}</title>
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/highlight/monokai_sublime.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}" />
+{% endblock %}
+
+{% block body %}
+  <div class="row">
+    <div class="medium-10 medium-offset-1 column middle">
+      <div id="bigheader" class="header big padded">
+        <a class="blogtitle big" href="/">{{ blog_title }}</a>
+        <br/>
+        <span class="posttitle big">{{ post_title }}</span>
+      </div>
+      <div id="smallheader" class="header small padded">
+        <a class="blogtitle small" href="/">{{ blog_title }}</a> <span class="posttitle small">{{ post_title }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="medium-10 medium-offset-1 column middle">
+      <div id="post" class="padded">
+        {{ post_html|safe }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script src="{{ url_for('static', filename='js/vendor/highlight.pack.js') }}"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script src="{{ url_for('static', filename='js/post.js') }}"></script>
+{% endblock %}

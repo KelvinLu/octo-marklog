@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 
+{% block title %}
+    <title>{{ blog_title }}</title>
+{% endblock %}
+
 {% block css %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/listings.css') }}" />
 {% endblock %}
 
 {% block body %}
   <div class="row">
     <div id="header" class="medium-10 medium-offset-1 column middle">
       <div id="blogtitle">
-        <a href="/"><h1 id="title">{{ blog_title|safe }}</h1></a>
+        <a href="/"><h1 id="title">{{ blog_title }}</h1></a>
       </div>
       <div id="blogdesc">
         <p>{{ blog_desc|safe }}</p>
@@ -32,9 +36,9 @@
 
             <div class="words">
               <p class="date">{{ post.postdate.strftime('%d %B, %Y') }}</p>
-              <p class="title">{{ post.title|safe }}</p>
+              <p class="title">{{ post.title }}</p>
               {% if post.previewtext%}
-                <p class="text">{{ post.previewtext|safe }}</p>
+                <p class="text">{{ post.previewtext }}</p>
               {% endif %}
             </div>
 
