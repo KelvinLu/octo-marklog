@@ -31,7 +31,7 @@ $( document ).ready(function() {
 	var slideTime = 100;
 
 	$listings.css({"padding-top": $header.outerHeight(true)});
-	
+	$header.css({"max-width": $listings.width()});
 
 	var minimalHeader = function() {
 		$desc.slideUp(slideTime);

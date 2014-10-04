@@ -7,6 +7,7 @@ $( document ).ready(function() {
 
 	$smallheader.hide();
 	$postcontent.css({"padding-top": $bigheader.outerHeight(true) + 100});
+	$("div.header").css({"max-width": $postcontent.outerWidth(true)});
 
 	var showSmallHeader = function() {
 		$bigheader.slideUp(slideTime, function() {
