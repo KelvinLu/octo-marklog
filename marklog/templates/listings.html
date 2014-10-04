@@ -31,11 +31,15 @@
         <div class="listing padded">
           <a class="postlink" href="/post/{{ post.slug }}">
 
-            <div class="bg padded float expand color" style="background-color: {{ post_colors|random }};">
-            </div>
-
           {% if post.previewimage %}
             <div class="bg padded float expand image" style="background-image: url({{ post.previewimage }});">
+            </div>
+            <div class="bg padded float expand overlay dark" style="background-color: black;">
+            </div>
+          {% else %}
+            <div class="bg padded float expand color" style="background-color: {{ post_colors|random }};">
+            </div>
+            <div class="bg padded float expand overlay light" style="background-color: black;">
             </div>
           {% endif %}
 

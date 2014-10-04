@@ -54,12 +54,23 @@ div.listing div.expand {
 div.listing div.bg.image {
 	background-size: cover;
 	background-position: center center;
+}
+
+div.listing div.bg.overlay.dark {
+	opacity: 0.6;
+}
+
+div.listing div.bg.overlay.light {
+	opacity: 0.2;
+}
+
+div.listing div.bg.overlay {
 	-webkit-transition: opacity 0.2s;
 	transition: opacity 0.2s;
 }
 
-div.listing div.bg.image:hover {
-	opacity: 0.5;
+div.listing div.bg.overlay:hover {
+	opacity: 0.1;
 }
 
 div.listing p.date {
