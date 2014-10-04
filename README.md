@@ -15,10 +15,10 @@ Setting it up requires minimal work:
 
 1. Clone the repo
 2. Use pip to install dependencies, either in a virtualenv or not
-3. Run fakeposts.py in marklog/assets/posts to generate some fake posts
-4. Run updateposts.py in the project root to update the listing database
-5. Run runserver.py
-6. Visit http://localhost:5000
+3. Run `fakeposts.py` in `marklog/assets/posts` to generate some fake posts
+4. Run `updateposts.py` in the project root to update the listing database
+5. Run `runserver.py`
+6. Visit `http://localhost:5000`
 
 ```bash
 git clone https://github.com/KelvinLu/marklog
