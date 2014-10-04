@@ -43,7 +43,7 @@ def blogpost(postslug):
 	return render_template('post.html', **context)
 
 @app.errorhandler(404)
-def error_404(e):
+def error_404(e = None):
 	context = {
 		"blog_title": app.config['MARKLOG_BLOG_TITLE'],
 		"post_colors": app.config['MARKLOG_BLOG_POST_COLORS'],
@@ -51,8 +51,9 @@ def error_404(e):
 
 	return render_template('404.html', **context), 404
 
+@app.route('/500')
 @app.errorhandler(500)
-def error_500(e):
+def error_500(e = None):
 	context = {
 		"blog_title": app.config['MARKLOG_BLOG_TITLE'],
 		"post_colors": app.config['MARKLOG_BLOG_POST_COLORS'],

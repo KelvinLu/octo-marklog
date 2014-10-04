@@ -20,7 +20,7 @@ md = markdown.Markdown(extensions = ['markdown.extensions.meta',
 
 
 # Snippet from http://flask.pocoo.org/snippets/5/
-_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
+_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.;]+')
 def slugify(text, delim=u'-'):
     """Generates an slightly worse ASCII-only slug."""
     result = []
