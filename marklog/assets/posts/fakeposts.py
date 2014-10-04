@@ -1,5 +1,11 @@
 import sys
-import urllib2
+
+# Python 2.x vs. 3.x
+try:
+	from urllib.request import urlopen
+except ImportError:
+	from urllib2 import urlopen	
+
 import random
 
 # tybg for restful-like apis
@@ -13,12 +19,12 @@ except Exception:
 	i = 1
 
 for j in range(i):
-	md = urllib2.urlopen(md_url).read()
+	md = urlopen(md_url).read()
 
 	meta = {
-		"title": urllib2.urlopen(text_url).read()[57:].split(".")[0],
+		"title": urlopen(text_url).read()[57:].split(".")[0],
 		"date": "2014-" + str(random.randint(1, 12)) + "-" + str(random.randint(1, 28)),
-		"previewtext": urllib2.urlopen(text_url).read()[57:].strip(),
+		"previewtext": urlopen(text_url).read()[57:].strip(),
 		"previewimage": image_url if random.choice([True, False]) else None,
 	}
 
