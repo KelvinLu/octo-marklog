@@ -29,7 +29,7 @@
     <div id="listings" class="medium-10 medium-offset-1 column middle">
       {% for post in posts %}
         <div class="listing padded">
-          <a href="/post/{{ post.slug }}">
+          <a class="postlink" href="/post/{{ post.slug }}">
 
             <div class="bg padded float expand color" style="background-color: {{ post_colors|random }};">
             </div>

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+	<title>{{ blog_title }} - 500</title>
+{% endblock %}
+
+{% block body %}
+  <div id="bg500" style="background-color: {{ post_colors|random }}; opacity: 0.5; width: 100%; height: 100%;">
+  	<div id="content500" style="position: relative; top: 30%; text-align: center; color: white; text-shadow: 2px 2px black;">
+  		<p>oops!</p>
+  		<p>it looks like all the Pythons escaped from the zoo; please contact the zookeepers!</p>
+  	</div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+      var $bg500 = $("div#bg500");
+      var $content500 = $("div#content500");
+      var o = 0.5;
+      $(content500).mousemove(function(){
+        o += 0.01;
+        $bg500.css("opacity", o);
+      });
+  </script>
+{% endblock %}
