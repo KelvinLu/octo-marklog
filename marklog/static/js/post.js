@@ -1,10 +1,12 @@
 $( document ).ready(function() {
 	var $smallheader = $("div#smallheader");
 	var $bigheader = $("div#bigheader");
+	var $postcontent = $("div#post")
 	var atTop = true;
 	var slideTime = 100;
 
 	$smallheader.hide();
+	$postcontent.css({"padding-top": $bigheader.outerHeight(true) + 100});
 
 	var showSmallHeader = function() {
 		$bigheader.slideUp(slideTime, function() {
@@ -31,7 +33,6 @@ $( document ).ready(function() {
 			atTop = true;
 		}
 	});
-
 });
 
 

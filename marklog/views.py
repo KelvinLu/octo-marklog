@@ -8,7 +8,7 @@ import os
 @app.route('/')
 @app.route('/listings/<int:page>')
 def listings(page = 1):
-	limit = 10
+	limit = 15
 	offset = (page - 1) * limit
 	postquery = posts.Post.query.order_by(posts.Post.postdate.desc()).offset(offset).limit(limit).all()
 
@@ -24,11 +24,6 @@ def listings(page = 1):
 		"prevpage": page - 1,
 	}
 	return render_template('listings.html', **context)
-
-@app.route('/update')
-def update():
-	posts.Post.update_files()
-	return str(posts.Post.query.all())
 
 @app.route('/post/<postslug>')
 def blogpost(postslug):

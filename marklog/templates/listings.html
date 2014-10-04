@@ -5,18 +5,23 @@
 {% endblock %}
 
 {% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/listings.css') }}" />
 {% endblock %}
 
 {% block body %}
   <div class="row">
-    <div id="header" class="medium-10 medium-offset-1 column middle">
-      <div id="blogtitle">
-        <a href="/"><h1 id="title">{{ blog_title }}</h1></a>
+    <div id="headercontainer" class="medium-10 medium-offset-1 column middle">
+
+      <div id="header">
+        <div id="blogtitle">
+          <a href="/"><span id="title">{{ blog_title }}</span></a>
+        </div>
+        <div id="blogdesc">
+          <p>{{ blog_desc|safe }}</p>
+        </div>
       </div>
-      <div id="blogdesc">
-        <p>{{ blog_desc|safe }}</p>
-      </div>
+
     </div>
   </div>
 
@@ -26,11 +31,11 @@
         <div class="listing padded">
           <a href="/post/{{ post.slug }}">
 
-            <div class="bg color padded float expand" style="background-color: {{ post_colors|random }};">
+            <div class="bg padded float expand color" style="background-color: {{ post_colors|random }};">
             </div>
 
           {% if post.previewimage %}
-            <div class="bg image padded float expand" style="background-image: url({{ post.previewimage }});">
+            <div class="bg padded float expand image" style="background-image: url({{ post.previewimage }});">
             </div>
           {% endif %}
 
@@ -57,6 +62,13 @@
       <a href="/listings/{{ nextpage }}">Next</a>
     </div>    
   </div>
+
+  <div id="footer">
+    <a href="https://github.com/KelvinLu/marklog" target="_blank">
+      <span>made with <i class="fa fa-heart"></i> &amp; <i class="fa fa-coffee"></i> | <i class="fa fa-github"></i></span>
+    </a>
+  </div>
+
 {% endblock %}
 
 {% block js %}

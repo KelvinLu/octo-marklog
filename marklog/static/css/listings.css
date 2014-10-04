@@ -78,19 +78,55 @@ div.listing p.text {
 }
 
 div#header {
-	text-align: center;
-	color: #08191D;
-	padding-top: 6em;
-	padding-bottom: 12em;
+	position: fixed;
+	top: 0px;
+	z-index: 1;
+	
+	background-color: black;
+	color: white;
+	padding-top: 4em;
+	padding-bottom: 6em;
+	padding-left: 1em;
+	padding-right: 1em;
 }
 
-h1#title {
+span#title {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: bold;
-	color: #08191D;
+	font-size: 2em;
+	color: white;
 }
 
 div#pagination {
 	border-top: 5px solid black;
 	text-align: center;	
+}
+
+div#footer {
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+
+	font-size: 0.6em;
+	background-color: black;
+	padding: 0em 1em;
+
+	opacity: 0.2;
+}
+
+div#footer:hover {
+	opacity: 0.4;
+}
+
+div#footer span {
+	color: white;
+}
+
+@media (max-width: 40em) {
+	div#footer {
+		opacity: 0;
+	}
+	div#footer:hover {
+		opacity: 0;
+	}
 }
