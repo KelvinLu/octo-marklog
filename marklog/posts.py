@@ -1,5 +1,6 @@
 from marklog import app, db, cache
 
+import sys
 import os
 import glob
 import datetime as dt
@@ -29,6 +30,12 @@ def slugify(text, delim=u'-'):
         if word:
             result.append(word)
     return delim.join(result)
+
+PY_VERSION = sys.version_info[0]
+if PY_VERSION == 2:
+	to_unicode = unicode
+else if PY_VERSION == 3:
+	to_unicode = lambda text: text.decode('unicode')
 
 
 class Post(db.Model):
@@ -99,7 +106,8 @@ class Post(db.Model):
 	def new_post(cls, filename, filepath):
 		# Since filenames are already computed, we'll just use those again
 		f = open(filepath, 'r')
-		html = md.reset().convert(f.read())
+		md_text = to_unicode(f.read())
+		html = md.reset().convert(md_text)
 		f.close()
 		# TODO: ensure no string field is over the global char limit
 		title = md.Meta.get('title', [''])[0]
@@ -132,3 +140,4 @@ class Post(db.Model):
 		cache.set(self.slug, html)
 
 		return html
+
