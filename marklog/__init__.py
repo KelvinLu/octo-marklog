@@ -11,8 +11,8 @@ from marklog import posts
 from marklog import views
 
 try:
-	db.create_all()
+    db.create_all()
 except Exception:
-	# Already exists
-	print("Tried to create database")
-	pass
+    # Already exists
+    print("Tried to create database")
+    pass
