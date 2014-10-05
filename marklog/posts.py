@@ -109,8 +109,9 @@ class Post(db.Model):
                 else:
                     continue
             post, html = cls.new_post(f[0], f[1])
-            cache.set(post.slug, html)
+
             if post:
+                cache.set(post.slug, html)
                 db.session.add(post)
 
         db.session.commit()
