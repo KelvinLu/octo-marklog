@@ -47,7 +47,7 @@ def markdown_convert(filepath):
     html = md.reset().convert(to_unicode(f.read()))
     f.close()
 
-    return html
+    return html, md.Meta
 
 
 
@@ -118,16 +118,16 @@ class Post(db.Model):
     @classmethod
     def new_post(cls, filename, filepath):
         # Since filenames are already computed, we'll just use those again
-        markdown_convert(filepath)
+        html, meta = markdown_convert(filepath)
 
         # TODO: ensure no string field is over the global char limit
-        title = md.Meta.get('title', [''])[0]
-        date = md.Meta.get('date', [''])[0]
-        previewtext = md.Meta.get('previewtext', [''])[0]       
-        previewimage = md.Meta.get('previewimage', [''])[0]
+        title = meta.get('title', [''])[0]
+        date = meta.get('date', [''])[0]
+        previewtext = meta.get('previewtext', [''])[0]       
+        previewimage = meta.get('previewimage', [''])[0]
 
         if not title:
-            return False
+            return False, None
 
         try:
             year, month, day = map(int, date.split('-'))
@@ -144,7 +144,7 @@ class Post(db.Model):
         if html:
             return html
 
-        markdown_convert(filepath)
+        html, meta = markdown_convert(filepath)
 
         cache.set(self.slug, html)
 
