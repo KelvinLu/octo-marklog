@@ -12,7 +12,7 @@ def listings(page = 1):
 	offset = (page - 1) * limit
 	postquery = posts.Post.query.order_by(posts.Post.postdate.desc()).offset(offset).limit(limit).all()
 
-	if not postquery:
+	if (not postquery) and offset:
 		abort(404)
 
 	context = {

@@ -1,4 +1,5 @@
 from marklog import app, db, cache
+from marklog import compat
 
 import sys
 import os
@@ -31,11 +32,23 @@ def slugify(text, delim=u'-'):
             result.append(word)
     return delim.join(result)
 
-PY_VERSION = sys.version_info[0]
-if PY_VERSION == 2:
+
+
+if compat.PY_VERSION == 2:
 	to_unicode = lambda text: unicode(text, 'utf-8')
-elif PY_VERSION == 3:
-	to_unicode = lambda text: text.decode('unicode')
+else:
+	to_unicode = lambda text: text
+
+
+
+
+def markdown_convert(filepath):
+	f = open(filepath, 'r')
+	html = md.reset().convert(to_unicode(f.read()))
+	f.close()
+
+	return html
+
 
 
 class Post(db.Model):
@@ -105,10 +118,8 @@ class Post(db.Model):
 	@classmethod
 	def new_post(cls, filename, filepath):
 		# Since filenames are already computed, we'll just use those again
-		f = open(filepath, 'r')
-		md_text = to_unicode(f.read())
-		html = md.reset().convert(md_text)
-		f.close()
+		markdown_convert(filepath)
+
 		# TODO: ensure no string field is over the global char limit
 		title = md.Meta.get('title', [''])[0]
 		date = md.Meta.get('date', [''])[0]
@@ -133,9 +144,7 @@ class Post(db.Model):
 		if html:
 			return html
 
-		f = open(filepath, 'r')
-		html = md.reset().convert(f.read())
-		f.close()
+		markdown_convert(filepath)
 
 		cache.set(self.slug, html)
 
