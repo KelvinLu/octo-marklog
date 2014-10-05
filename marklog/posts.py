@@ -34,7 +34,7 @@ def slugify(text, delim=u'-'):
 PY_VERSION = sys.version_info[0]
 if PY_VERSION == 2:
 	to_unicode = unicode
-else if PY_VERSION == 3:
+elif PY_VERSION == 3:
 	to_unicode = lambda text: text.decode('unicode')
 
 
