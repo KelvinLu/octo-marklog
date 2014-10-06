@@ -19,12 +19,12 @@ except IndexError:
     i = 1
 
 for j in range(i):
-    md = str(urlopen(md_url).read())
+    md = urlopen(md_url).read()
 
     meta = {
-        "title": str(urlopen(text_url).read())[58:].split(".")[0].strip(),
+        "title": urlopen(text_url).read().decode("utf-8", "ignore")[57:].split(".")[0].strip(),
         "date": "2014-" + str(random.randint(1, 12)) + "-" + str(random.randint(1, 28)),
-        "previewtext": str(urlopen(text_url).read())[58:].strip(),
+        "previewtext": urlopen(text_url).read().decode("utf-8", "ignore")[57:].strip(),
         "previewimage": image_url if random.choice([True, False]) else None,
     }
 
@@ -34,5 +34,5 @@ for j in range(i):
         if v is not None:
             f.write(k + ": " + v + "\n")
 
-    f.write('\n' + md)
+    f.write('\n' + md.decode("utf-8", "ignore"))
     f.close()
