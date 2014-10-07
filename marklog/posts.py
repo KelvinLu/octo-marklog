@@ -9,6 +9,8 @@ import re
 from unicodedata import normalize
 import markdown
 
+from pyembed.markdown import PyEmbedMarkdown
+
 
 
 MAX_STR_LIM = 200
@@ -17,7 +19,8 @@ MAX_STR_LIM = 200
 
 md = markdown.Markdown(extensions = ['markdown.extensions.meta', 
     'markdown.extensions.fenced_code',
-    'markdown.extensions.smart_strong',])
+    'markdown.extensions.smart_strong',
+    PyEmbedMarkdown(),])
 
 
 
