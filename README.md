@@ -1,4 +1,4 @@
-marklog
+Marklog
 =======
 
 ![Travis](https://travis-ci.org/KelvinLu/marklog.svg?branch=master)
@@ -9,7 +9,7 @@ Serve static Markdown files as articles. All the cool kids have blogs.
 
 ## Running a demo
 
-Unfortunately, I do not have a demo set up online. If you want to see marklog in action, please run it on your local machine!
+Unfortunately, I do not have a demo set up online. If you want to see Marklog in action, please run it on your local machine!
 
 Setting it up requires minimal work:
 
