@@ -28,30 +28,25 @@
   <div class="row">
     <div id="listings" class="medium-10 medium-offset-1 column middle">
       {% for post in posts %}
-        <div class="listing padded">
-          <a class="postlink" href="/post/{{ post.slug }}">
+        <div class="listing">
+          <div class="padded" style="border-top: 1px solid {{ post_colors|random }};">
+            <a class="postlink" href="/post/{{ post.slug }}">
 
-          {% if post.previewimage %}
-            <div class="bg padded float expand image" style="background-image: url({{ post.previewimage }});">
-            </div>
-            <div class="bg padded float expand overlay dark" style="background-color: black;">
-            </div>
-          {% else %}
-            <div class="bg padded float expand color" style="background-color: {{ post_colors|random }};">
-            </div>
-            <div class="bg padded float expand overlay light" style="background-color: black;">
-            </div>
-          {% endif %}
+            {% if post.previewimage %}
+              <img class="image" src="{{ post.previewimage }}">
+              </img>
+            {% endif %}
 
-            <div class="words">
-              <p class="date">{{ post.postdate.strftime('%d %B, %Y') }}</p>
-              <p class="title">{{ post.title }}</p>
-              {% if post.previewtext%}
-                <p class="text">{{ post.previewtext }}</p>
-              {% endif %}
-            </div>
+              <div class="words">
+                <p class="date">{{ post.postdate.strftime('%d %B, %Y') }}</p>
+                <p class="title">{{ post.title }}</p>
+                {% if post.previewtext%}
+                  <p class="text">{{ post.previewtext }}</p>
+                {% endif %}
+              </div>
 
-          </a>
+            </a>
+          </div>
         </div> 
       {% endfor %}
     </div>
