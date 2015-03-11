@@ -11,7 +11,7 @@ import random
 # tybg for restful-like apis
 md_url = r'http://jaspervdj.be/lorem-markdownum/markdown.txt'
 text_url = r'http://loripsum.net/api/plaintext/short/1'
-image_url = r'http://hhhhold.com/l'
+image_url = r'http://lorempixel.com/400/300/abstract/'
 
 try:
     i = int(sys.argv[1])
