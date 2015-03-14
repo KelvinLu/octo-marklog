@@ -58,3 +58,5 @@ target/
 *.db
 post/
 listings/
+404.html
+index.html
