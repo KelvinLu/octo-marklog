@@ -3,6 +3,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 
+GITHUB_BASE_DIR = basedir
+
 GITHUB_POST_DIR = os.path.join(basedir, 'post')
 
 GITHUB_LISTINGS_DIR = os.path.join(basedir, 'listings')
