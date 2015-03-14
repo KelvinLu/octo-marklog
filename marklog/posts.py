@@ -96,6 +96,8 @@ class Post(db.Model):
         # 1. Prune Posts that are missing from posts folder
         for post in cls.query.all():
             if post.filename not in filenames:
+                os.remove(os.path.join(app.config['GITHUB_POST_DIR'], '{0}.html'.format(post.slug)))
+
                 db.session.delete(post)
 
         db.session.commit()
@@ -114,7 +116,10 @@ class Post(db.Model):
             post, html = cls.new_post(f[0], f[1])
 
             if post:
-                cache.set(post.slug, html)
+                html_f = open(os.path.join(app.config['GITHUB_POST_DIR'], '{0}.html'.format(post.slug)), 'w')
+                html_f.write(html)
+                html_f.close()
+
                 db.session.add(post)
 
         db.session.commit()
@@ -140,11 +145,3 @@ class Post(db.Model):
             postdate = dt.datetime.fromtimestamp(os.path.getctime(filepath))
 
         return cls(filename, filepath, title, postdate, previewtext, previewimage), html
-
-    def render_html(self):
-        filepath = os.path.join(app.config['MARKLOG_POST_DIR'], self.filename)
-
-        html, meta = markdown_convert(filepath)
-
-        return html
-

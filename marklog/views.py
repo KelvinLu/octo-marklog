@@ -1,4 +1,4 @@
-from flask import request, Response, json, abort, render_template, url_for
+from flask import request, Response, json, abort, render_template, url_for, jsonify
 
 from marklog import app
 from marklog import posts
@@ -10,9 +10,6 @@ def listings(page = 1):
     offset = (page - 1) * limit
     postquery = posts.Post.query.order_by(posts.Post.postdate.desc()).offset(offset).limit(limit).all()
 
-    if (not postquery) and offset:
-        abort(404)
-
     context = {
         "blog_title": app.config['MARKLOG_BLOG_TITLE'],
         "blog_desc": app.config['MARKLOG_BLOG_DESC'],
@@ -23,21 +20,14 @@ def listings(page = 1):
     }
     return render_template('listings.html', **context)
 
-def blogpost(postslug):
-    p = posts.Post.query.filter_by(slug = postslug).first()
-
-    if not p:
-        abort(404)
-
-    html = p.render_html()
-
+def blogpost(post):
     context = {
         "blog_title": app.config['MARKLOG_BLOG_TITLE'],
-        "post_title": p.title,
-        "post_html": p.render_html(),
+        "post_title": post.title,
+        "post_html": post.render_html(),
     }
 
-    return render_template('post.html', **context)
+    return jsonify(**context)
 
 def error_404(e = None):
     context = {
@@ -46,11 +36,3 @@ def error_404(e = None):
     }
 
     return render_template('404.html', **context), 404
-
-def error_500(e = None):
-    context = {
-        "blog_title": app.config['MARKLOG_BLOG_TITLE'],
-        "post_colors": app.config['MARKLOG_BLOG_POST_COLORS'],
-    }
-
-    return render_template('500.html', **context), 500
