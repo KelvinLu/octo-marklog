@@ -5,8 +5,6 @@ from marklog import posts
 
 import os
 
-@app.route('/')
-@app.route('/listings/<int:page>')
 def listings(page = 1):
     limit = 15
     offset = (page - 1) * limit
@@ -25,7 +23,6 @@ def listings(page = 1):
     }
     return render_template('listings.html', **context)
 
-@app.route('/post/<postslug>')
 def blogpost(postslug):
     p = posts.Post.query.filter_by(slug = postslug).first()
 
@@ -42,7 +39,6 @@ def blogpost(postslug):
 
     return render_template('post.html', **context)
 
-@app.errorhandler(404)
 def error_404(e = None):
     context = {
         "blog_title": app.config['MARKLOG_BLOG_TITLE'],
@@ -51,8 +47,6 @@ def error_404(e = None):
 
     return render_template('404.html', **context), 404
 
-@app.route('/500')
-@app.errorhandler(500)
 def error_500(e = None):
     context = {
         "blog_title": app.config['MARKLOG_BLOG_TITLE'],

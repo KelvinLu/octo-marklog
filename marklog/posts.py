@@ -1,4 +1,4 @@
-from marklog import app, db, cache
+from marklog import app, db
 from marklog import compat
 
 import sys
@@ -143,14 +143,8 @@ class Post(db.Model):
 
     def render_html(self):
         filepath = os.path.join(app.config['MARKLOG_POST_DIR'], self.filename)
-        html = cache.get(self.slug)
-
-        if html:
-            return html
 
         html, meta = markdown_convert(filepath)
-
-        cache.set(self.slug, html)
 
         return html
 
