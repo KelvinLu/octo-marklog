@@ -7,7 +7,7 @@ This is an offshoot of the original [Marklog](https://github.com/KelvinLu/marklo
 
 It's meant to be run on GitHub's generously provided personal sites. Simply clone this repo, do the Marklog thing, change to upstream to your *username*.github.io repo, and push!
 
-Want to demo it yourself locally?
+Want to demo it locally first? No problem.
 
 1. Clone the repo
 2. Use pip to install dependencies, either in a virtualenv or not
