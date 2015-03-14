@@ -1,0 +1,156 @@
+body {
+    font-family: 'Lato', serif;
+
+    overflow: hidden;
+}
+
+div.main-section {
+    width: 100vw;
+    height: 100vh;
+
+    box-sizing: border-box;
+
+    overflow: auto;
+}
+
+div#listings-section {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+}
+
+div#post-section {
+    background: white;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+div#listings-header {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    padding: 2em;
+}
+
+div#listings-header {
+    background-color: black;
+    color: white;
+
+    padding-top: 4em;
+    padding-bottom: 6em;
+
+    z-index: 1;
+}
+
+span#listings-title {
+    font-size: 2em;
+}
+
+div.listing {
+    position: relative;
+
+    width: 33%;
+
+    box-sizing: border-box;
+
+    display: inline-block;
+    padding: 6em;
+    margin-top: 2em;
+}
+
+div.listing-skewed:hover {
+    background-color: #CBCDD0;
+}
+
+@media (min-width: 40em) {
+    div.listing-skewed {
+        border: 2px dashed black;
+        padding: 0.5em;
+
+        -webkit-transform: matrix(1, -0.4, 0.8, 1, 0, 0);
+        transform: matrix(1, -0.4, 0.8, 1, 0, 0);
+    }
+}
+
+@media (max-width: 40em) {
+    div.listing {
+        width: 100%;
+        padding: 2em;
+    }
+}
+
+div.listing a {
+    text-decoration: none;
+}
+
+div.listing p.preview {
+    color: black;
+    font-size: 0.8em;
+}
+
+div.listing span {
+    padding: 0.2em;
+}
+
+div.listing span.post-title {
+    background-color: black;
+    color: white;
+    font-size: 1em;
+}
+
+div.listing span.date {
+    background-color: black;
+    color: white;
+    font-size: 0.6em;
+}
+
+a#load-more {
+    position: fixed;
+
+    bottom: 0;
+    left: 50%;
+
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+
+    background-color: black;
+    color: white;
+
+    font-size: 0.8em;
+
+    padding: 0.5em;
+
+    cursor: pointer;
+}
+
+div.post {
+    padding: 4em;
+
+    margin-top: 6em;
+}
+
+div#post-header {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    background-color: black;
+    color: white;
+
+    padding: 2em;
+}
+
+span#post-title {
+    font-size: 2em;
+    font-weight: bold;
+}
