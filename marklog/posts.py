@@ -8,6 +8,7 @@ import datetime as dt
 import re
 from unicodedata import normalize
 import markdown
+import json
 
 from pyembed.markdown import PyEmbedMarkdown
 
@@ -96,7 +97,7 @@ class Post(db.Model):
         # 1. Prune Posts that are missing from posts folder
         for post in cls.query.all():
             if post.filename not in filenames:
-                os.remove(os.path.join(app.config['GITHUB_POST_DIR'], '{0}.html'.format(post.slug)))
+                os.remove(os.path.join(app.config['GITHUB_POST_DIR'], '{0}.json'.format(post.slug)))
 
                 db.session.delete(post)
 
@@ -116,9 +117,14 @@ class Post(db.Model):
             post, html = cls.new_post(f[0], f[1])
 
             if post:
-                html_f = open(os.path.join(app.config['GITHUB_POST_DIR'], '{0}.html'.format(post.slug)), 'w')
-                html_f.write(html)
-                html_f.close()
+                context = {
+                    "post_title": post.title,
+                    "post_html": html,
+                }
+
+                f = open(os.path.join(app.config['GITHUB_POST_DIR'], '{0}.json'.format(post.slug)), 'w')
+                f.write(json.dumps(context))
+                f.close()
 
                 db.session.add(post)
 

@@ -1,15 +1,22 @@
-from flask import request, Response, json, abort, render_template, url_for, jsonify
+import os, json
+
 from jinja2 import Environment, PackageLoader
 
 from marklog import app
 from marklog import posts
 
-import os
 
-env = Environment(loader=PackageLoader('marklog', 'templates'))
-listings_template = env.get_template('listings.html')
-post_template = env.get_template('post.html')
-notfound_template = env.get_template('404.html')
+
+def index():
+    env = Environment(loader=PackageLoader('marklog', 'templates'))
+    listings_template = env.get_template('index.html')
+
+    context = {
+
+    }
+
+    return listings_template.render(**context)
+
 
 
 def listings(page = 1):
@@ -20,29 +27,13 @@ def listings(page = 1):
     if (not postquery) and offset:
         return None
 
-    context = {
-        "blog_title": app.config['MARKLOG_BLOG_TITLE'],
-        "blog_desc": app.config['MARKLOG_BLOG_DESC'],
-        "post_colors": app.config['MARKLOG_BLOG_POST_COLORS'],
-        "posts": postquery,
-        "nextpage": page + 1,
-        "prevpage": page - 1,
-    }
-    return listings_template.render(**context)
+    listings = [{
+        "slug": post.slug,
+        "title": post.title,
+        "previewtext": post.previewtext,
+        "previewimage": post.previewimage,
+        "postdate": post.postdate.strftime("%d %B, %Y"),
+    } for post in postquery]
+    
 
-def blogpost(post):
-    context = {
-        "blog_title": app.config['MARKLOG_BLOG_TITLE'],
-        "post_title": post.title,
-        "post_html": post.render_html(),
-    }
-
-    return jsonify(**context)
-
-def error_404(e = None):
-    context = {
-        "blog_title": app.config['MARKLOG_BLOG_TITLE'],
-        "post_colors": app.config['MARKLOG_BLOG_POST_COLORS'],
-    }
-
-    return notfound_template.render(**context)
+    return listings
