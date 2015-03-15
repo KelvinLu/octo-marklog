@@ -86,6 +86,8 @@
             'opacity': '0',
             'pointer-events': 'none',
         });
+            
+        p_elem.post_section.trigger('post:hide');       
     };
 
     showPost = function(post_hash) {
@@ -126,6 +128,8 @@
         post_section: $("div#post-section"),
         post_header_template: _.template($('#post-header-template').html()),
         post_title: $('span#post-title.title'),
+
+        html_title: $('title#html-title'),
     };
 
     h = {
@@ -187,6 +191,9 @@
                 h.atTop = true;
             }
         });
+        
+        if (!location.hash.slice(1))
+            h_elems.post_section.trigger('post:hide');       
     };
 
     change_post_title_in_header = function(post_title) {
@@ -211,6 +218,11 @@
 
     h_elems.post_section.on('post:new', function(event, post){
         change_post_title_in_header(post.post_title);
+        h_elems.html_title.html(post.post_title + ' &mdash; ' + h.meta.blog_title);
+    });
+
+    h_elems.post_section.on('post:hide', function(event){
+        h_elems.html_title.html(h.meta.blog_title);
     });
 })();
 
