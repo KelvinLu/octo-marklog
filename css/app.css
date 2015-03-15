@@ -58,7 +58,7 @@ span#listings-title {
 div.listing {
     position: relative;
 
-    width: 33%;
+    width: 45%;
 
     box-sizing: border-box;
 
@@ -67,17 +67,49 @@ div.listing {
     margin-top: 2em;
 }
 
-div.listing-skewed:hover {
-    background-color: #CBCDD0;
+div.listing-skewed {
+    background-color: rgba(255, 255, 255, 0.4);
+
+    -webkit-transition: background-color 200ms ease-out;
+    transition: background-color 200ms ease-out;
 }
 
-@media (min-width: 40em) {
+div.listing-skewed:hover {
+    background-color: rgba(203, 205, 208, 0.4);
+}
+
+div.listing-lift {
+    -webkit-transform: translateY(0px) translateX(0px);
+    transform: translateY(0px) translateX(0px);
+
+    -webkit-transition: -webkit-transform 200ms ease-out;
+    transition: transform 200ms ease-out;
+}
+
+div.listing-lift:hover {
+    -webkit-transform: translateY(-10px) translateX(10px);
+    transform: translateY(-10px) translateX(10px);
+}
+
+@media (min-width: 50em) {
+    div.listing {
+        -webkit-transform: translateX(10%);
+        transform: translateX(10%);
+    }
+
     div.listing-skewed {
         border: 2px dashed black;
         padding: 0.5em;
 
         -webkit-transform: matrix(1, -0.4, 0.8, 1, 0, 0);
         transform: matrix(1, -0.4, 0.8, 1, 0, 0);
+    }
+}
+
+@media (min-width: 40em) and (max-width: 50em) {
+    div.listing {
+        width: 45%;
+        padding: 2em;
     }
 }
 
