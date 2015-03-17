@@ -76,6 +76,7 @@
             p_elem.container.append(p_elem.post_elem = $(post_elem));
 
             p_elem.post_section.trigger('post:new', [post]);
+            p_elem.post_section.trigger('post:highlight', [$('pre code', p_elem.post_elem)]);
         }, 'json');
     };
 
@@ -233,7 +234,9 @@
         post_section: $("div#post-section"),
     };
 
-    h_elems.post_section.on('post:new', function() {
-        hljs.initHighlightingOnLoad();
+    h_elems.post_section.on('post:highlight', function(event, blocks) {
+        blocks.each(function(i, block){
+            hljs.highlightBlock(block);
+        });
     });
 })();
