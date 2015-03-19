@@ -1,7 +1,7 @@
 // Listings
 (function() {
     l = {
-        page: 1,
+        page: 0,
         template: _.template($('#listing-template').html()),
         new_elems: [],
         loading: false,
