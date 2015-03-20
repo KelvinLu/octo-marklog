@@ -30,6 +30,8 @@ div#post-section {
 
     opacity: 0;
     pointer-events: none;
+
+    z-index: 1;
 }
 
 div#listings-header {
@@ -47,8 +49,6 @@ div#listings-header {
 
     padding-top: 4em;
     padding-bottom: 6em;
-
-    z-index: 1;
 }
 
 span#listings-title {
@@ -180,6 +180,8 @@ div#post-header {
     color: white;
 
     padding: 2em;
+
+    z-index: 1;
 }
 
 span#post-title {
