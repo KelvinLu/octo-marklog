@@ -56,7 +56,11 @@ div#listings-header {
 span#listings-title {
     font-size: 2em;
     font-weight: bold;
-    letter-spacing: 0.2em;
+}
+
+.blog-title {
+    font-variant: small-caps;
+    letter-spacing: 0.15em;
 }
 
 div.listing {
