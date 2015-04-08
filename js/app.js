@@ -134,7 +134,8 @@
     };
 
     h = {
-        atTop: true,
+        atListingTop: true,
+        atPostTop: true,
         slideTime: 100,
 
         meta: {
@@ -142,21 +143,25 @@
         },
     };
 
-    minimalHeader = function() {
+    minimalListingHeader = function() {
         h_elems.desc.slideUp(h.slideTime);
         h_elems.listings_title.animate({"font-size": "1em"}, h.slideTime);
         h_elems.listings_header.animate({"padding-top": "0.2em", "padding-bottom": "0.2em"}, h.slideTime);
+    };
 
+    maximalListingHeader = function() {
+        h_elems.desc.slideDown(h.slideTime); 
+        h_elems.listings_title.animate({"font-size": "2em"}, h.slideTime);
+        h_elems.listings_header.animate({"padding-top": "4em", "padding-bottom": "6em"}, h.slideTime);
+    };
+
+    minimalPostHeader = function() {
         h_elems.post_title.animate({"font-size": "1em"}, h.slideTime);
         h_elems.post_header.animate({"padding": "0.2em"}, h.slideTime);
 
     };
 
-    maximalHeader = function() {
-        h_elems.desc.slideDown(h.slideTime); 
-        h_elems.listings_title.animate({"font-size": "2em"}, h.slideTime);
-        h_elems.listings_header.animate({"padding-top": "4em", "padding-bottom": "6em"}, h.slideTime);
-
+    maximalPostHeader = function() {
         h_elems.post_title.animate({"font-size": "2em"}, h.slideTime);
         h_elems.post_header.animate({"padding": "2em"}, h.slideTime);
     };
@@ -167,29 +172,29 @@
 
         h_elems.listings_section.scroll(function(e) {
             if (h_elems.listings_section.scrollTop() > 50) {
-                if (h.atTop) {
-                    minimalHeader();
+                if (h.atListingTop) {
+                    minimalListingHeader();
                 }
-                h.atTop = false;
+                h.atListingTop = false;
             } else {
-                if (!h.atTop) {
-                    maximalHeader();
+                if (!h.atListingTop) {
+                    maximalListingHeader();
                 }
-                h.atTop = true;
+                h.atListingTop = true;
             }
         });
 
         h_elems.post_section.scroll(function(e) {
             if (h_elems.post_section.scrollTop() > 50) {
-                if (h.atTop) {
-                    minimalHeader();
+                if (h.atPostTop) {
+                    minimalPostHeader();
                 }
-                h.atTop = false;
+                h.atPostTop = false;
             } else {
-                if (!h.atTop) {
-                    maximalHeader();
+                if (!h.atPostTop) {
+                    maximalPostHeader();
                 }
-                h.atTop = true;
+                h.atPostTop = true;
             }
         });
         
