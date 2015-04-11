@@ -106,7 +106,7 @@ div.listing-lift:hover {
     }
 
     div.listing-skewed {
-        border: 2px dashed black;
+        border: 1px solid rgba(203, 205, 208, 0.4);
         padding: 0.5em;
 
         -webkit-transform: matrix(1, -0.4, 0.8, 1, 0, 0);
