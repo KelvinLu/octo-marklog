@@ -176,6 +176,8 @@ div.post {
     padding: 4em;
 
     margin-top: 6em;
+    
+    line-height: 170%;
 }
 
 div#post-header {
