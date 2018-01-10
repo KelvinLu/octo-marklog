@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+declare ASSET_CMD='cp -r'
+declare MARKLOG_DIR="$(pwd)/octo-marklog"
+declare -a BOOTSTRAP_DIRS=('post' 'listings' 'markdown' 'markdown/assets')
+declare -a BOOTSTRAP_FILES=('settings.py')
+declare -a BOOTSTRAP_LINKS=('requirements.txt')
+declare -a BOOTSTRAP_ASSETS=('css' 'js' 'index.html')
+
+if [ $# -gt 1 ] || ([ $# -eq 1 ] && ([ "${1}" == '-h' ] || [ "${1}" == '--help' ])); then
+  echo "Usage: ${0} [-h, --help, -l, --local-links]" 2>/dev/null
+  exit
+fi
+
+if [ $# -eq 1 ] && ([ "${1}" == '-l' ] || [ "${1}" == '--local-links' ]); then
+  ASSET_CMD='ln -s'
+fi
+
+for p in pip virtualenv;
+do
+  which "${p}" 1>/dev/null || (echo "Please install ${p}" 2>/dev/null ; exit 1)
+done
+
+echo "Bootstrapping $(pwd)"
+
+[ -d "${MARKLOG_DIR}" ] || (echo "Could not find ${MARKLOG_DIR}" 2>/dev/null ; exit 1)
+
+for d in ${BOOTSTRAP_DIRS[@]};
+do
+  [ -d ${d} ] || mkdir ${d}
+done
+
+for f in ${BOOTSTRAP_FILES[@]};
+do
+  [ -f ${f} ] || cp "${MARKLOG_DIR}/${f}" "${f}"
+done
+
+for f in ${BOOTSTRAP_LINKS[@]};
+do
+  [ -f ${f} ] || ln -s "${MARKLOG_DIR}/${f}" "${f}"
+done
+
+[ -d 'env' ] || (virtualenv 'env' && ./env/bin/pip install -r 'requirements.txt')
+
+for f in ${BOOTSTRAP_ASSETS[@]};
+do
+  [ -e ${f} ] || ${ASSET_CMD} "${MARKLOG_DIR}/${f}" "${f}"
+done

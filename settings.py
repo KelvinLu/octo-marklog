@@ -3,14 +3,12 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 
-GITHUB_BASE_DIR = basedir
+BASE_DIR =      basedir
+ASSETS_PATH =   'assets'
 
-GITHUB_POST_DIR = os.path.join(basedir, 'post')
+POST_DIR =      os.path.join(basedir, 'post')
+LISTINGS_DIR =  os.path.join(basedir, 'listings')
+MARKDOWN_DIR =  os.path.join(basedir, 'markdown')
 
-GITHUB_LISTINGS_DIR = os.path.join(basedir, 'listings')
-
-MARKLOG_POST_DIR = os.path.join(basedir, 'marklog/assets/posts')
-
-MARKLOG_BLOG_TITLE = 'My Awesome Marklog Blog'
-
-MARKLOG_BLOG_DESC = 'I am very cool'
+BLOG_TITLE =    'My Awesome Marklog Blog'
+BLOG_DESC =     'I am very cool'
