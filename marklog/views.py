@@ -7,8 +7,8 @@ from marklog import posts
 
 def meta():
     return {
-        "blog_title": app.config['MARKLOG_BLOG_TITLE'],
-        "blog_desc": app.config['MARKLOG_BLOG_DESC'],
+        "blog_title": app.config['BLOG_TITLE'],
+        "blog_desc": app.config['BLOG_DESC'],
     }
 
 
@@ -28,6 +28,5 @@ def listings(page = 1):
         "preview_image": post.previewimage,
         "date": post.postdate.strftime("%d %B, %Y"),
     } for post in postquery]
-    
 
     return listings

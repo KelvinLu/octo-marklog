@@ -1,9 +1,8 @@
-from marklog import app, db
-from marklog import compat
-
 import sys
 import os
+import fnmatch
 import glob
+import itertools
 import datetime as dt
 import re
 from unicodedata import normalize
@@ -12,23 +11,28 @@ import json
 
 from pyembed.markdown import PyEmbedMarkdown
 
+from marklog import app, db
+from marklog import compat, marklog_ext
+
 
 
 MAX_STR_LIM = 200
 
 
 
-md = markdown.Markdown(extensions = ['markdown.extensions.meta', 
+MARKLOG_EXT = marklog_ext.MarklogExtension()
+md = markdown.Markdown(extensions = ['markdown.extensions.meta',
     'markdown.extensions.fenced_code',
     'markdown.extensions.smart_strong',
-    PyEmbedMarkdown(),])
+    PyEmbedMarkdown(),
+    MARKLOG_EXT,])
 
 
 
 # Snippet from http://flask.pocoo.org/snippets/5/
 _punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.;]+')
 def slugify(text, delim=u'-'):
-    """Generates an slightly worse ASCII-only slug."""
+    """Generates a slightly worse ASCII-only slug."""
     result = []
     for word in _punct_re.split(text.lower()):
         word = normalize('NFKD', word)
@@ -48,6 +52,7 @@ else:
 
 def markdown_convert(filepath):
     f = open(filepath, 'r')
+    MARKLOG_EXT.setConfig('marklog_file_hint', filepath)
     html = md.reset().convert(to_unicode(f.read()))
     f.close()
 
@@ -57,7 +62,7 @@ def markdown_convert(filepath):
 
 class Post(db.Model):
     id =            db.Column(db.Integer, primary_key = True)
-    filename =      db.Column(db.String(MAX_STR_LIM))
+    filepath =      db.Column(db.String(MAX_STR_LIM))
     title =         db.Column(db.String(MAX_STR_LIM))
     previewtext =   db.Column(db.Text)
     previewimage =  db.Column(db.String(MAX_STR_LIM))
@@ -65,13 +70,13 @@ class Post(db.Model):
     filedate =      db.Column(db.DateTime)
     slug =          db.Column(db.String(MAX_STR_LIM))
 
-    def __init__(self, filename, filepath, title, postdate, previewtext, previewimage):
-        self.filename = filename
+    def __init__(self, filepath, fullpath, title, postdate, previewtext, previewimage):
+        self.filepath = filepath
         self.title = title
         self.previewtext = previewtext
         self.previewimage = previewimage
         self.postdate = postdate
-        self.filedate = dt.datetime.fromtimestamp(os.path.getmtime(filepath))
+        self.filedate = dt.datetime.fromtimestamp(os.path.getmtime(fullpath))
 
         self.slug = Post.get_slug(self.title)
 
@@ -90,31 +95,36 @@ class Post(db.Model):
 
     @classmethod
     def update_files(cls):
-        filepaths = glob.glob(os.path.join(app.config['MARKLOG_POST_DIR'], '*.md'))
-        filenames = list(map(os.path.basename, filepaths))
-        files = zip(filenames, filepaths)
+        markdown_dir = app.config['MARKDOWN_DIR']
+
+        files = []
+        for root, dirname, filename in os.walk(markdown_dir):
+            for filename in filename:
+                path = os.path.join(root, filename)
+                if fnmatch.fnmatch(path, '*.md') and os.access(path, os.R_OK):
+                    files.append([os.path.normpath(path).replace(os.path.normpath(markdown_dir) + os.path.sep, '', 1), path])
 
         # 1. Prune Posts that are missing from posts folder
         for post in cls.query.all():
-            if post.filename not in filenames:
-                os.remove(os.path.join(app.config['GITHUB_POST_DIR'], '{0}.json'.format(post.slug)))
-
+            if post.filepath not in itertools.imap(lambda x: x[0], files):
+                os.remove(os.path.join(app.config['POST_DIR'], '{0}.json'.format(post.slug)))
                 db.session.delete(post)
 
         db.session.commit()
 
         # 2. Add new Post for unregistered files from posts folder
         #    and update those that exist
-        for f in files:
-            post = cls.query.filter_by(filename = f[0]).first()
+        for filepath, fullpath in files:
+            post = cls.query.filter_by(filepath = filepath).first()
             if post:
-                file_mod_date = dt.datetime.fromtimestamp(os.path.getmtime(f[1]))
-                if post.filedate < file_mod_date:
+                file_mod_date = dt.datetime.fromtimestamp(os.path.getmtime(fullpath))
+                # TODO
+                if True or post.filedate < file_mod_date:
                     db.session.delete(post)
                     db.session.commit()
                 else:
                     continue
-            post, html = cls.new_post(f[0], f[1])
+            post, html = cls.new_post(filepath, fullpath)
 
             if post:
                 context = {
@@ -122,7 +132,7 @@ class Post(db.Model):
                     "post_html": html,
                 }
 
-                f = open(os.path.join(app.config['GITHUB_POST_DIR'], '{0}.json'.format(post.slug)), 'w')
+                f = open(os.path.join(app.config['POST_DIR'], '{0}.json'.format(post.slug)), 'w')
                 f.write(json.dumps(context))
                 f.close()
 
@@ -131,14 +141,13 @@ class Post(db.Model):
         db.session.commit()
 
     @classmethod
-    def new_post(cls, filename, filepath):
-        # Since filenames are already computed, we'll just use those again
-        html, meta = markdown_convert(filepath)
+    def new_post(cls, filepath, fullpath):
+        html, meta = markdown_convert(fullpath)
 
         # TODO: ensure no string field is over the global char limit
         title = meta.get('title', [''])[0]
         date = meta.get('date', [''])[0]
-        previewtext = meta.get('previewtext', [''])[0]       
+        previewtext = meta.get('previewtext', [''])[0]
         previewimage = meta.get('previewimage', [''])[0]
 
         if not title:
@@ -150,4 +159,4 @@ class Post(db.Model):
         except Exception:
             postdate = dt.datetime.fromtimestamp(os.path.getctime(filepath))
 
-        return cls(filename, filepath, title, postdate, previewtext, previewimage), html
+        return cls(filepath, fullpath, title, postdate, previewtext, previewimage), html

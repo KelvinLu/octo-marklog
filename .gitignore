@@ -53,9 +53,9 @@ docs/_build/
 # PyBuilder
 target/
 
+# Vim
+*.swp
+
 # Marklog
 *.md
 *.db
-post/
-listings/
-meta.json
