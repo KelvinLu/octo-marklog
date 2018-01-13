@@ -118,8 +118,7 @@ class Post(db.Model):
             post = cls.query.filter_by(filepath = filepath).first()
             if post:
                 file_mod_date = dt.datetime.fromtimestamp(os.path.getmtime(fullpath))
-                # TODO
-                if True or post.filedate < file_mod_date:
+                if post.filedate < file_mod_date:
                     db.session.delete(post)
                     db.session.commit()
                 else:
