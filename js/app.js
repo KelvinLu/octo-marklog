@@ -67,15 +67,31 @@
 
     loadPost = function(post_hash) {
         return $.get('/post/' + post_hash + '.json', function(post) {
-            if (p_elem.post_elem) { 
-                p_elem.post_elem.remove();
-                p_elem.post_elem = undefined;
+            old_post_elem = p_elem.post_elem;
+            post_elem = $(p.template(post));
+            p_elem.container.prepend(post_elem);
+
+            if (old_post_elem) {
+                delay_ms = 500;
+                old_post_elem.css({
+                    '-webkit-animation': 'fadeOut ' + delay_ms.toString() + 'ms cubic-bezier(.17,.67,.42,.99)',
+                    'animation': 'fadeOut ' + delay_ms.toString() + 'ms cubic-bezier(.17,.67,.42,.99)',
+                    'opacity': '0',
+                    'pointer-events': 'none',
+                });
+                post_elem.css({
+                    '-webkit-animation': 'fadeIn ' + delay_ms.toString() + 'ms cubic-bezier(.17,.67,.42,.99)',
+                    'animation': 'fadeIn ' + delay_ms.toString() + 'ms cubic-bezier(.17,.67,.42,.99)',
+                    'opacity': '1',
+                    'pointer-events': 'auto',
+                });
+                window.setTimeout(function (e) {
+                    e.remove();
+                }, delay_ms, old_post_elem);
             }
+            p_elem.post_elem = post_elem;
 
-            post_elem = p.template(post);
-            p_elem.container.append(p_elem.post_elem = $(post_elem));
-
-            p_elem.post_section.trigger('post:new', [post]);
+            p_elem.post_section.trigger('post:' + (old_post_elem ? 'change' : 'new'), [post]);
             p_elem.post_section.trigger('post:highlight', [$('pre code', p_elem.post_elem)]);
         }, 'json');
     };
@@ -87,8 +103,10 @@
             'opacity': '0',
             'pointer-events': 'none',
         });
-            
-        p_elem.post_section.trigger('post:hide');       
+
+        if (post_elem = p_elem.post_elem) { post_elem.css({ 'pointer-events': 'none' }); }
+
+        p_elem.post_section.trigger('post:hide');
     };
 
     showPost = function(post_hash) {
@@ -113,20 +131,20 @@
 
     if (location.hash && (hash = location.hash.slice(1))) showPost(hash);
 
-    window.addEventListener("hashchange", hashChange, false);
+    window.addEventListener('hashchange', hashChange, false);
 })();
 
 // Headers
 (function() {
     h_elems = {
-        listings_header: $("div#listings-header"),
-        listings: $("div#listings"),
-        listings_section: $("div#listings-section"),
+        listings_header: $('div#listings-header'),
+        listings: $('div#listings'),
+        listings_section: $('div#listings-section'),
         listings_header_template: _.template($('#listings-header-template').html()),
 
-        post_header: $("div#post-header"),
-        post: $("div#post"),
-        post_section: $("div#post-section"),
+        post_header: $('div#post-header'),
+        post: $('div#post'),
+        post_section: $('div#post-section'),
         post_header_template: _.template($('#post-header-template').html()),
         post_title: $('span#post-title.title'),
 
@@ -145,30 +163,29 @@
 
     minimalListingHeader = function() {
         h_elems.desc.slideUp(h.slideTime);
-        h_elems.listings_title.animate({"font-size": "1em"}, h.slideTime);
-        h_elems.listings_header.animate({"padding-top": "0.2em", "padding-bottom": "0.2em"}, h.slideTime);
+        h_elems.listings_title.animate({ 'font-size': '1em' }, h.slideTime);
+        h_elems.listings_header.animate({ 'padding-top': '0.2em', 'padding-bottom': '0.2em' }, h.slideTime);
     };
 
     maximalListingHeader = function() {
-        h_elems.desc.slideDown(h.slideTime); 
-        h_elems.listings_title.animate({"font-size": "2em"}, h.slideTime);
-        h_elems.listings_header.animate({"padding-top": "4em", "padding-bottom": "6em"}, h.slideTime);
+        h_elems.desc.slideDown(h.slideTime);
+        h_elems.listings_title.animate({ 'font-size': '2em' }, h.slideTime);
+        h_elems.listings_header.animate({ 'padding-top': '4em', 'padding-bottom': '6em' }, h.slideTime);
     };
 
     minimalPostHeader = function() {
-        h_elems.post_title.animate({"font-size": "1em"}, h.slideTime);
-        h_elems.post_header.animate({"padding": "0.2em"}, h.slideTime);
-
+        h_elems.post_title.animate({ 'font-size': '1em' }, h.slideTime);
+        h_elems.post_header.animate({ 'padding': '0.2em' }, h.slideTime);
     };
 
     maximalPostHeader = function() {
-        h_elems.post_title.animate({"font-size": "2em"}, h.slideTime);
-        h_elems.post_header.animate({"padding": "2em"}, h.slideTime);
+        h_elems.post_title.animate({ 'font-size': '2em' }, h.slideTime);
+        h_elems.post_header.animate({ 'padding': '2em' }, h.slideTime);
     };
 
     init = function() {
-        h_elems.listings.css({"padding-top": h_elems.listings_header.outerHeight(true)});
-        h_elems.listings_header.css({"max-width": h_elems.listings.width()});
+        h_elems.listings.css({ 'padding-top': h_elems.listings_header.outerHeight(true) });
+        h_elems.listings_header.css({ 'max-width': h_elems.listings.width() });
 
         h_elems.listings_section.scroll(function(e) {
             if (h_elems.listings_section.scrollTop() > 50) {
@@ -197,9 +214,9 @@
                 h.atPostTop = true;
             }
         });
-        
+
         if (!location.hash.slice(1))
-            h_elems.post_section.trigger('post:hide');       
+            h_elems.post_section.trigger('post:hide');
     };
 
     change_post_title_in_header = function(post_title) {
@@ -214,7 +231,7 @@
         h_elems.listings_header.append(listings_header);
 
         post_header = h_elems.post_header_template(h.meta);
-        h_elems.post_header.append(post_header); 
+        h_elems.post_header.append(post_header);
 
         h_elems.listings_title = $("span#listings-title.title");
         h_elems.desc = $("div#blog-desc");
@@ -224,6 +241,12 @@
 
     h_elems.post_section.on('post:new', function(event, post){
         change_post_title_in_header(post.post_title);
+        h_elems.html_title.html(post.post_title + ' &mdash; ' + h.meta.blog_title);
+    });
+
+    h_elems.post_section.on('post:change', function(event, post){
+        change_post_title_in_header(post.post_title);
+        minimalPostHeader();
         h_elems.html_title.html(post.post_title + ' &mdash; ' + h.meta.blog_title);
     });
 
