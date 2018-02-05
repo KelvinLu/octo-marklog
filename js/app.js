@@ -219,10 +219,18 @@
             h_elems.post_section.trigger('post:hide');
     };
 
-    change_post_title_in_header = function(post_title) {
+    change_post_title = function(post_title) {
+        h_elems.html_title.html(post_title + ' &mdash; ' + h.meta.blog_title);
         h_elems.post_title.html(post_title);
         h.meta.post_title = post_title;
     };
+
+    exec_js = function() {
+        if (c = $('code.marklog-exec').text().trim()) {
+            console.log("marklog-exec:\n" + c.split('\n').map(function(l) { return "> " + l; }).join('\n'));
+            eval(c);
+        }
+    }
 
     $.get('meta.json', function(meta){
         h.meta = _.extend(h.meta, meta);
@@ -240,14 +248,14 @@
     }, 'json').done(init);
 
     h_elems.post_section.on('post:new', function(event, post){
-        change_post_title_in_header(post.post_title);
-        h_elems.html_title.html(post.post_title + ' &mdash; ' + h.meta.blog_title);
+        change_post_title(post.post_title);
+        exec_js();
     });
 
     h_elems.post_section.on('post:change', function(event, post){
-        change_post_title_in_header(post.post_title);
+        change_post_title(post.post_title);
         minimalPostHeader();
-        h_elems.html_title.html(post.post_title + ' &mdash; ' + h.meta.blog_title);
+        exec_js();
     });
 
     h_elems.post_section.on('post:hide', function(event){
